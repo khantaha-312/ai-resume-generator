@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resume of Muhammad Taha Khan</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+    <style>
+        body {
+            font-family: 'Verdana', sans-serif;
+            color: #333;
+            background-color: #eef1f6;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            width: 100%;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 30px;
+            background: #ffffff;
+            box-shadow: 0px 0px 10px rgba(0,0,0,0.1);
+        }
+        .resume-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 2px solid #bbb;
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+        }
+        .name {
+            font-size: 2em;
+            color: #333;
+        }
+        .resumeTitle {
+            font-size: 1.2em;
+            color: #666;
+        }
+        .section {
+            margin-top: 20px;
+        }
+        .sectiontitle {
+            font-size: 1.1em;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 10px;
+            border-left: 5px solid #007acc;
+            padding-left: 10px;
+        }
+        .skills ul, .projects ul {
+            list-style-type: square;
+            padding-left: 15px;
+        }
+        .objective-form-container {
+            background-color: #f9f9f9;
+            padding: 10px;
+            border-radius: 5px;
+            margin-top: 10px;
+        }
+        .btn-update {
+            background-color: #007acc;
+            color: white;
+            border: none;
+            padding: 6px 12px;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        .btn-update:hover {
+            background-color: #005fa3;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="resume-header">
+            <div>
+                <h1 class="name">Muhammad Taha Khan</h1>
+                <p class="resumeTitle">Senior Python Developer</p>
+            </div>
+            <div>
+                <p class="summary">Seasoned Python Developer with expertise in data-driven applications, web frameworks, and automation tools.</p>
+            </div>
+        </div>
+
+        <!-- Objective Section -->
+        <section class="objective section">
+            <h2 class="sectiontitle">Objective</h2>
+            <p id="objective-text">{{ objective }}</p>
+            <div class="objective-form-container">
+                <form method="POST" action="{% url 'update_objective' %}" id="objective-form">
+                    {% csrf_token %}
+                    <input type="hidden" name="origin_template" value="template3">
+                    <label for="profession-select">Select Profession:</label>
+                    <select name="new_objective" id="profession-select" onchange="toggleOtherProfession()">
+                        <option value="">--Choose a profession--</option>
+                        <option value="Software Developer">Software Developer</option>
+                        <option value="Data Scientist">Data Scientist</option>
+                        <option value="Machine Learning Engineer">Machine Learning Engineer</option>
+                        <option value="Web Developer">Web Developer</option>
+                        <option value="DevOps Engineer">DevOps Engineer</option>
+                        <option value="Mobile App Developer">Mobile App Developer</option>
+                        <option value="Other">Other</option>
+                    </select><br>
+                    <input type="text" name="other_profession" id="other-profession-input" placeholder="Type your profession here..." style="display: none; margin-top: 5px;"><br>
+                    <input type="hidden" name="origin_template" value="template3">
+                    <button type="submit" class="btn-update">Update Objective</button>
+                </form>
+            </div>
+        </section>
+<script>
+function toggleOtherProfession() {
+    const select = document.getElementById('profession-select');
+    const otherInput = document.getElementById('other-profession-input');
+    if (select.value === 'Other') {
+        otherInput.style.display = 'block';
+        otherInput.value = '';
+    } else {
+        otherInput.style.display = 'none';
+        otherInput.value = '';
+    }
+}
+
+// AJAX for form submission
+document.querySelectorAll('form.update-objective-form').forEach(form => {
+    form.addEventListener('submit', function(e) {
+        e.preventDefault();
+        const formData = new FormData(this);
+        const objectiveTextElement = document.querySelector('.objective-text'); // Assuming a class "objective-text" for the objective text element
+        fetch("{% url 'update_objective' %}", {
+            method: 'POST',
+            body: formData,
+            headers: {
+                'X-Requested-With': 'XMLHttpRequest'
+            }
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                // Update the objective text based on the template
+                objectiveTextElement.textContent = data.new_objective;
+            }
+        })
+        .catch(error => console.error('Error:', error));
+    });
+});
+</script>
+
+        <!-- Skills Section -->
+        <section class="skills section">
+            <h2 class="sectiontitle">Skills</h2>
+            <ul>
+                <li>Python, Django, Flask</li>
+                <li>SQL, MySQL</li>
+                <li>API Integration</li>
+                <li>Machine Learning (TensorFlow, PyTorch)</li>
+            </ul>
+        </section>
+
+        <!-- Experience Section -->
+        <section class="experience section">
+            <h2 class="sectiontitle">Experience</h2>
+            <h3>Senior Python Developer</h3>
+            <p><strong>SSUET, Karachi | 2024-07 – Present</strong></p>
+            <ul>
+                <li>Developed QR-based POS software for inventory management</li>
+                <li>Optimized code quality and performance through review sessions</li>
+                <li>Improved automation processes using AI/ML tools</li>
+            </ul>
+        </section>
+
+        <!-- Education Section -->
+        <section class="education section">
+            <h2 class="sectiontitle">Education</h2>
+            <p><strong>High School Diploma</strong> | Government Dehli College - Karachi, Sindh, Pakistan</p>
+        </section>
+
+        <!-- Projects Section -->
+        <section class="projects section">
+            <h2 class="sectiontitle">Projects</h2>
+            <ul>
+                <li>Weather Forecast API (Python & Flask)</li>
+                <li>CustomTkinter Coffee Machine GUI</li>
+                <li>Automated LinkedIn Job Application Bot</li>
+            </ul>
+        </section>
+    </div>
+</body>
+</html>

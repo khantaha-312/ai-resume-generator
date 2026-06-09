@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Muhammad Taha Khan - Resume</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        h2 {
+            margin-top: 30px;
+        }
+
+        p {
+            line-height: 1.6;
+            margin-bottom: 15px;
+        }
+
+        .section {
+            margin-bottom: 30px;
+        }
+
+        .contact {
+            text-align: center;
+        }
+
+        .social-links a {
+            margin: 0 10px;
+            color: #333;
+            text-decoration: none;
+        }
+
+        .social-links a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Muhammad Taha Khan</h1>
+        <div class="section">
+            <h2>Software Developer (Python)</h2>
+            <p>Adapt Python Developer Intern renowned for enhancing code quality through rigorous testing...</p>
+        </div>
+        <div class="section">
+            <h2>Objective</h2>
+            <p>Highly motivated and results-driven Mobile App Developer seeking a challenging role at [Company Name]. Proven ability to design, develop, and deploy high-quality iOS and Android applications using Swift, Kotlin, and Java. Passionate about creating user-friendly and innovative mobile experiences with a strong focus on performance and
+
+
+
+
+        <!-- Form to input new objective text -->
+        <section class="objective">
+            <h3 class="sectiontitle">Objective</h3>
+            <p id="objective-text">{{ objective }}</p>
+            <form id="objective-form" method="POST" action="{% url 'update_objective' %}">
+                {% csrf_token %}
+                <input type="hidden" name="origin_template" value="template2">
+                <label for="profession-select">Select Profession:</label>
+                <select name="new_objective" id="profession-select" class="styled-select" onchange="toggleOtherProfession()">
+                    <option value="">--Choose a profession--</option>
+                    <option value="Software Developer">Software Developer</option>
+                    <option value="Data Scientist">Data Scientist</option>
+                    <option value="Machine Learning Engineer">Machine Learning Engineer</option>
+                    <option value="Web Developer">Web Developer</option>
+                    <option value="DevOps Engineer">DevOps Engineer</option>
+                    <option value="Mobile App Developer">Mobile App Developer</option>
+                    <option value="Other">Other</option>
+                </select><br>
+
+                <input type="text" name="other_profession" id="other-profession-input" class="other-profession" placeholder="Type your profession here..." style="display: none;"><br>
+
+                <!-- Hidden input to indicate the origin template -->
+                <input type="hidden" name="origin_template" value="template2">
+
+                <button type="submit" class="btn-update">Update Objective</button>
+            </form>
+        </section>
+
+        <section class="skills">
+            <h3 class="sectiontitle">Skills</h3>
+            <ul>
+                <li>Python, Django, Flask</li>
+                <li>SQL, MySQL</li>
+                <li>APIs, RESTful Services</li>
+                <li>Machine Learning Libraries (TensorFlow, PyTorch)</li>
+            </ul>
+        </section>
+
+        <section class="experience">
+            <h3 class="sectiontitle">Work Experience</h3>
+            <h4>Senior Python Developer</h4>
+            <p><strong>SSUET, Karachi, Pakistan | 2024-07 – Current</strong></p>
+            <ul>
+                <li>Developed QR code-based POS software...</li>
+                <li>Led team projects to optimize internal processes...</li>
+                <li>Maintained high code quality and performance standards...</li>
+            </ul>
+        </section>
+
+        <section class="education">
+            <h3 class="sectiontitle">Education</h3>
+            <p><strong>High School Diploma</strong> | Government Dehli College - Karachi, Sindh, Pakistan</p>
+        </section>
+
+        <section class="projects">
+            <h3 class="sectiontitle">Projects</h3>
+            <ul>
+                <li>Weather Forecast API with Python and Flask</li>
+                <li>CustomTkinter-based Coffee Machine GUI</li>
+                <li>Automated LinkedIn Job Application Bot</li>
+            </ul>
+        </section>
+    </div>
+
+<script>
+function toggleOtherProfession() {
+    const select = document.getElementById('profession-select');
+    const otherInput = document.getElementById('other-profession-input');
+    if (select.value === 'Other') {
+        otherInput.style.display = 'block';
+        otherInput.value = '';
+    } else {
+        otherInput.style.display = 'none';
+        otherInput.value = '';
+    }
+}
+
+// AJAX for form submission
+document.querySelectorAll('form.update-objective-form').forEach(form => {
+    form.addEventListener('submit', function(e) {
+        e.preventDefault();
+        const formData = new FormData(this);
+        const objectiveTextElement = document.querySelector('.objective-text'); // Assuming a class "objective-text" for the objective text element
+        fetch("{% url 'update_objective' %}", {
+            method: 'POST',
+            body: formData,
+            headers: {
+                'X-Requested-With': 'XMLHttpRequest'
+            }
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                // Update the objective text based on the template
+                objectiveTextElement.textContent = data.new_objective;
+            }
+        })
+        .catch(error => console.error('Error:', error));
+    });
+});
+</script>
+
+</body>
+</html>
+

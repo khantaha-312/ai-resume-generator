@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CV Template Selection</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+    <style>
+        .container {
+            display: flex;
+            justify-content: space-around;
+            margin-top: 50px;
+        }
+        .cv-template {
+            border: 2px solid #333;
+            padding: 20px;
+            text-align: center;
+            width: 30%;
+            cursor: pointer;
+            transition: transform 0.3s;
+        }
+        .cv-template img {
+            max-width: 100%;
+            height: auto;
+            border-bottom: 1px solid #ddd;
+            margin-bottom: 10px;
+        }
+        .cv-template:hover {
+            transform: scale(1.05);
+        }
+        .cv-template-title {
+            font-size: 18px;
+            font-weight: bold;
+        }
+        .title {
+            color: lightblue;
+            text-align: center;
+
+        }
+    </style>
+</head>
+<body>
+    <h1 style="text-align: center;">Choose Your CV Template</h1>
+
+    <div class="container">
+        <!-- Template 1 -->
+        <div class="cv-template" onclick="window.location.href='{% url 'template1' %}'">
+            <img src="{% static 'images/template1.png' %}" alt="Template 1">
+            <p class="cv-template-title">CV Template 1</p>
+        </div>
+
+        <!-- Template 2 -->
+        <div class="cv-template" onclick="window.location.href='{% url 'template2' %}'">
+            <img src="{% static 'images/template2.png' %}" alt="Template 2">
+            <p class="cv-template-title">CV Template 2</p>
+        </div>
+
+        <!-- Template 3 -->
+        <div class="cv-template" onclick="window.location.href='{% url 'template3' %}'">
+            <img src="{% static 'images/template3.png' %}" alt="Template 3">
+            <p class="cv-template-title">CV Template 3</p>
+        </div>
+    </div>
+
+</body>
+</html>
+
+
+
+
+
+
+<!--<!DOCTYPE html>-->
+<!--<html lang="en">-->
+<!--<head>-->
+<!--    <meta charset="UTF-8">-->
+<!--    <meta name="viewport" content="width=device-width, initial-scale=1.0">-->
+<!--    <title>Resume of Muhammad Taha Khan</title>-->
+<!--    {% load static %}-->
+<!--    <link rel="stylesheet" href="{% static 'css/styles.css' %}">-->
+<!--    <style>-->
+<!--        /* Add some styles for the input field */-->
+<!--        .other-profession {-->
+<!--            display: none; /* Initially hidden */-->
+<!--        }-->
+<!--    </style>-->
+
+<!--</head>-->
+<!--<body>-->
+<!--    <div class="container">-->
+<!--        <div class="resume-header">-->
+<!--            <h1 class="name">Muhammad Taha Khan</h1>-->
+<!--            <h2 class="resumeTitle">Software Developer (Python)</h2>-->
+<!--            <p class="summary">Adapt Python Developer Intern renowned for enhancing code quality through rigorous testing...</p>-->
+<!--        </div>-->
+
+<!--&lt;!&ndash;         Form to input new objective text &ndash;&gt;-->
+<!--        <section class="objective">-->
+<!--            <h3 class="sectiontitle">Objective</h3>-->
+<!--            <p id="objective-text">{{ objective }}</p>-->
+
+<!--           <form method="POST" action="{% url 'update_objective' %}">-->
+<!--    {% csrf_token %}-->
+<!--    <label for="profession-select">Select Profession:</label>-->
+<!--    <select name="new_objective" id="profession-select" class="styled-select" onchange="toggleOtherProfession()">-->
+<!--        <option value="">&#45;&#45;Choose a profession&#45;&#45;</option>-->
+<!--        <option value="Software Developer">Software Developer</option>-->
+<!--        <option value="Data Scientist">Data Scientist</option>-->
+<!--        <option value="Machine Learning Engineer">Machine Learning Engineer</option>-->
+<!--        <option value="Web Developer">Web Developer</option>-->
+<!--        <option value="DevOps Engineer">DevOps Engineer</option>-->
+<!--        <option value="Mobile App Developer">Mobile App Developer</option>-->
+<!--        <option value="Other">Other</option>-->
+<!--    </select><br>-->
+
+<!--    <input type="text" name="other_profession" id="other-profession-input" class="other-profession" placeholder="Type your profession here..." style="display: none;">-->
+<!--<br>-->
+<!--    <button type="submit" class="btn-update">Update Objective</button>-->
+<!--</form>-->
+
+<!--<script>-->
+<!--function toggleOtherProfession() {-->
+<!--    const select = document.getElementById('profession-select');-->
+<!--    const otherInput = document.getElementById('other-profession-input');-->
+<!--    if (select.value === 'Other') {-->
+<!--        otherInput.style.display = 'block'; // Show input-->
+<!--        otherInput.value = ''; // Clear the input field-->
+<!--    } else {-->
+<!--        otherInput.style.display = 'none'; // Hide input-->
+<!--        otherInput.value = ''; // Clear the input field-->
+<!--    }-->
+<!--}-->
+<!--</script>-->
+
+<!--        </section>-->
+
+<!--        <div class="resume-body">-->
+<!--            <div class="left-column">-->
+<!--                <section class="contact">-->
+<!--                    <h3 class="sectiontitle">Contact</h3>-->
+<!--                    <p><strong>Address:</strong> Karachi, Sindh, 75300 PK</p>-->
+<!--                    <p><strong>Phone:</strong> +92 3348230096</p>-->
+<!--                    <p><strong>Email:</strong> mtahakhan315@gmail.com</p>-->
+<!--                </section>-->
+
+<!--                <section class="skills">-->
+<!--                    <h3 class="sectiontitle">Skills</h3>-->
+<!--                    <ul>-->
+<!--                        <li>SQL Databases</li>-->
+<!--                        <li>Object-Oriented Programming</li>-->
+<!--                        <li>NumPy Library</li>-->
+<!--                        <li>Pandas Library</li>-->
+<!--                        <li>Jupyter Notebooks</li>-->
+<!--                        <li>GitHub collaboration</li>-->
+<!--                        <li>Flask,Django framework</li>-->
+<!--                        <li>Scikit-Learn,TensorFlow Library</li>-->
+<!--                        <li>PyTorch Library</li>-->
+<!--                    </ul>-->
+<!--                </section>-->
+<!--            </div>-->
+
+<!--            <div class="right-column">-->
+<!--                <section class="work-history">-->
+<!--                    <h3 class="sectiontitle">Work History</h3>-->
+<!--                    <div class="job">-->
+<!--                        <h4 class="jobtitle">Python Developer Intern</h4>-->
+<!--                        <p><strong class="jobdates">2024-07 – Current</strong> | SSUET, Karachi, Pakistan</p>-->
+<!--                        <ul>-->
+<!--                            <li>Improved code quality by implementing rigorous testing and debugging processes...</li>-->
+<!--                            <li>Adapted quickly to new technologies...</li>-->
+<!--                            <li>Gathered user feedback to improve software design...</li>-->
+<!--                        </ul>-->
+<!--                    </div>-->
+<!--                </section>-->
+
+<!--                <section class="education">-->
+<!--                    <h3 class="sectiontitle">Education</h3>-->
+<!--                    <p><strong class="degree">High School Diploma</strong></p>-->
+<!--                    <p>Government Dehli College - Karachi, Sindh, Pakistan</p>-->
+<!--                </section>-->
+
+<!--                <section class="accomplishments">-->
+<!--                    <h3 class="sectiontitle">Accomplishments</h3>-->
+<!--                    <p>Developed a QR code-based POS software using OpenCV...</p>-->
+<!--                </section>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--    </div>-->
+<!--</body>-->
+<!--</html>-->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!--AIzaSyB553SsyZ1vYqTnCXUGBO7pZIY0Yufbo5g-->
+
+
+<!--# set API_KEY= AIzaSyB553SsyZ1vYqTnCXUGBO7pZIY0Yufbo5g-->
+<!--# $env:API_KEY="AIzaSyB553SsyZ1vYqTnCXUGBO7pZIY0Yufbo5g"-->
+
+<!--import os-->
+<!--import google.generativeai as genai-->
+
+<!--# Directly set your API key (for testing only)-->
+<!--api_key = "AIzaSyB553SsyZ1vYqTnCXUGBO7pZIY0Yufbo5g"  # Replace with your actual key-->
+<!--genai.configure(api_key=api_key)-->
+
+<!--# Initialize the model-->
+<!--model = genai.GenerativeModel("gemini-1.5-pro")  # Specify your model-->
+
+<!--# Function to generate text-->
+<!--def generate_text(prompt):-->
+<!--    response = model.generate_content(prompt)  # Call the correct method-->
+<!--    return response.text  # Adjust based on the actual response structure-->
+
+<!--# Example usage-->
+<!--if __name__ == "__main__":-->
+<!--    user_prompt = input("Enter your prompt: ")-->
+<!--    generated_text = generate_text(user_prompt)-->
+<!--    print("Generated Text:", generated_text)-->

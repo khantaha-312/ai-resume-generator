@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resume of Muhammad Taha Khan</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            color: #333;
+            margin: 0;
+            padding: 0;
+            background: #f7f7f7;
+        }
+        .container {
+            max-width: 800px;
+            margin: auto;
+            background: #fff;
+            padding: 20px;
+            box-shadow: 0px 4px 8px rgba(0,0,0,0.1);
+        }
+        .sectiontitle {
+            font-weight: bold;
+            color: #555;
+            border-bottom: 2px solid #ddd;
+            margin-bottom: 10px;
+        }
+        .objective, .skills, .work-history, .education, .accomplishments {
+            margin-bottom: 20px;
+        }
+        .resume-body {
+            display: flex;
+            justify-content: space-between;
+        }
+        .left-column, .right-column {
+            width: 48%;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Objective Section -->
+        <section class="objective">
+            <h3 class="sectiontitle">Objective</h3>
+            <p id="objective-text">{{ objective }}</p>
+
+            <form id="updateObjectiveForm">
+                {% csrf_token %}
+                <input type="hidden" name="origin_template" value="template1">
+                <label for="profession-select">Select Profession:</label>
+                <select name="new_objective" id="profession-select" class="styled-select" onchange="toggleOtherProfession()">
+                    <option value="">--Choose a profession--</option>
+                    <option value="Software Developer">Software Developer</option>
+                    <option value="Data Scientist">Data Scientist</option>
+                    <option value="Machine Learning Engineer">Machine Learning Engineer</option>
+                    <option value="Web Developer">Web Developer</option>
+                    <option value="DevOps Engineer">DevOps Engineer</option>
+                    <option value="Mobile App Developer">Mobile App Developer</option>
+                    <option value="Other">Other</option>
+                </select><br>
+
+                <input type="text" name="other_profession" id="other-profession-input" class="other-profession" placeholder="Type your profession here..." style="display: none;"><br>
+                <button type="submit" class="btn-update">Update Objective</button>
+            </form>
+<script>
+function toggleOtherProfession() {
+    const select = document.getElementById('profession-select');
+    const otherInput = document.getElementById('other-profession-input');
+    if (select.value === 'Other') {
+        otherInput.style.display = 'block';
+        otherInput.value = '';
+    } else {
+        otherInput.style.display = 'none';
+        otherInput.value = '';
+    }
+}
+
+// AJAX for form submission
+document.querySelectorAll('form.update-objective-form').forEach(form => {
+    form.addEventListener('submit', function(e) {
+        e.preventDefault();
+        const formData = new FormData(this);
+        const objectiveTextElement = document.querySelector('.objective-text'); // Assuming a class "objective-text" for the objective text element
+        fetch("{% url 'update_objective' %}", {
+            method: 'POST',
+            body: formData,
+            headers: {
+                'X-Requested-With': 'XMLHttpRequest'
+            }
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                // Update the objective text based on the template
+                objectiveTextElement.textContent = data.new_objective;
+            }
+        })
+        .catch(error => console.error('Error:', error));
+    });
+});
+</script>
+
+        </section>
+
+        <div class="resume-body">
+            <div class="left-column">
+                <section class="contact">
+                    <h3 class="sectiontitle">Contact</h3>
+                    <p><strong>Address:</strong> Karachi, Sindh, 75300 PK</p>
+                    <p><strong>Phone:</strong> +92 3348230096</p>
+                    <p><strong>Email:</strong> mtahakhan315@gmail.com</p>
+                </section>
+
+                <section class="skills">
+                    <h3 class="sectiontitle">Skills</h3>
+                    <ul>
+                        <li>SQL Databases</li>
+                        <li>Object-Oriented Programming</li>
+                        <li>NumPy Library</li>
+                        <li>Pandas Library</li>
+                        <li>Jupyter Notebooks</li>
+                        <li>GitHub collaboration</li>
+                        <li>Flask,Django framework</li>
+                        <li>Scikit-Learn,TensorFlow Library</li>
+                        <li>PyTorch Library</li>
+                    </ul>
+                </section>
+            </div>
+
+            <div class="right-column">
+                <section class="work-history">
+                    <h3 class="sectiontitle">Work History</h3>
+                    <div class="job">
+                        <h4 class="jobtitle">Python Developer Intern</h4>
+                        <p><strong class="jobdates">2024-07 – Current</strong> | SSUET, Karachi, Pakistan</p>
+                        <ul>
+                            <li>Improved code quality by implementing rigorous testing and debugging processes...</li>
+                            <li>Adapted quickly to new technologies...</li>
+                            <li>Gathered user feedback to improve software design...</li>
+                        </ul>
+                    </div>
+                </section>
+
+                <section class="education">
+                    <h3 class="sectiontitle">Education</h3>
+                    <p><strong class="degree">High School Diploma</strong></p>
+                    <p>Government Dehli College - Karachi, Sindh, Pakistan</p>
+                </section>
+
+                <section class="accomplishments">
+                    <h3 class="sectiontitle">Accomplishments</h3>
+                    <p>Developed a QR code-based POS software using OpenCV...</p>
+                </section>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
